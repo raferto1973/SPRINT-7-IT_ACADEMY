@@ -1,0 +1,61 @@
+<!-- starship-card.component.html -->
+
+<div class="container mt-5">
+  @if (starshipsService.selectedStarshipDetails()) {
+
+  <div class="row mb-5">
+    <div class="col-12 col-md-5 p-0">
+      <img [src]="starshipsService.selectedStarshipDetails()?.pic"
+        alt="{{ starshipsService.selectedStarshipDetails()?.name }}" (error)="handleImageError($event)"
+        class="img-fluid">
+    </div>
+    <div class="col-12 col-md-7 p-0 bg-white text-dark p-3 pb-0">
+      <h2 class="fs-3 mb-1">{{ starshipsService.selectedStarshipDetails()?.name }}</h2>
+      <p class="fs-6 mb-1">Model: {{ starshipsService.selectedStarshipDetails()?.model }}</p>
+      <p class="fs-6 mb-1">Manufacturer: {{ starshipsService.selectedStarshipDetails()?.manufacturer }}</p>
+      <p class="fs-6 mb-1">Cost in credits: {{ starshipsService.selectedStarshipDetails()?.cost_in_credits }}</p>
+      <p class="fs-6 mb-1">Length: {{ starshipsService.selectedStarshipDetails()?.length }}</p>
+      <p class="fs-6 mb-1">Max atmosphering speed: {{ starshipsService.selectedStarshipDetails()?.max_atmosphering_speed
+        }}</p>
+      <p class="fs-6 mb-1">crew: {{ starshipsService.selectedStarshipDetails()?.crew }}</p>
+      <p class="fs-6 mb-1">passengers: {{ starshipsService.selectedStarshipDetails()?.passengers }}</p>
+      <p class="fs-6 mb-1">Cargo capacity: {{ starshipsService.selectedStarshipDetails()?.cargo_capacity }}</p>
+      <!-- <p class="fs-6 mb-1">consumables: {{ starshipsService.selectedStarshipDetails()?.consumables }}</p>
+      <p class="fs-6 mb-1">hyperdrive_rating: {{ starshipsService.selectedStarshipDetails()?.hyperdrive_rating }}</p> -->
+      <p class="fs-6 mb-1">MGLT: {{ starshipsService.selectedStarshipDetails()?.MGLT }}</p>
+      <!-- <p class="fs-6 mb-1">starship_class: {{ starshipsService.selectedStarshipDetails()?.starship_class }}</p> -->
+    </div>
+  </div>
+
+  <div class="row gap-3">
+    <div class="col p-0">
+      <div class="bg-white p-3 h-100">
+        <app-pilot-card [pilotImages]="pilotImages"></app-pilot-card>
+      </div>
+    </div>
+
+    <div class="col p-0">
+      <div class="bg-white p-3 h-100">
+        <app-film-card [filmImages]="filmImages" />
+      </div>
+    </div>
+  </div>
+  }@else {
+  Loading information...
+  }
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <button [routerLink]="['/starships']">Back to List</button> -->

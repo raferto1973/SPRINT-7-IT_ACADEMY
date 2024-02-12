@@ -1,0 +1,14 @@
+<!-- pilot-card.component.html -->
+
+<div>
+  <h3 class="text-center text-dark fs-4">Related Pilots</h3>
+  <div class="d-flex justify-content-center gap-3">
+    @for (pilotImage of pilotImages; track $index) {
+    <div>
+      <img [src]="pilotImage" alt="Pilot Image" class="img-fluid smallcard" />
+    </div>
+    }@empty {
+    <p class="text-center text-dark">There are no related items for this category</p>
+    }
+  </div>
+</div>
