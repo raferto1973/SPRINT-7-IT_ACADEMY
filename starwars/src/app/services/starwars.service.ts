@@ -1,6 +1,5 @@
 // starwars.service.ts
 
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -37,7 +36,7 @@ export class StarwarsService {
         const responseData = await response.blob();
         const imageUrl = URL.createObjectURL(responseData);
         // imageUrl ahora contiene la URL de la imagen que puedes asignar a una propiedad en tu componente
-        console.log('Imagen loaded succesfully:', imageUrl);
+        console.log('Image loaded succesfully:', imageUrl);
         return imageUrl;
       }
       else throw new Error('Image not available');

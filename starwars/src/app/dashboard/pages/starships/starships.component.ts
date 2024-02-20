@@ -2,19 +2,19 @@
 
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, RouterOutlet } from '@angular/router';
 
-import { Starship } from '../../interfaces/starship.interface';
+import { Starship } from '@interfaces/starship.interface';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import { StarwarsService } from '../../services/starwars.service';
+import { StarwarsService } from '@services/starwars.service';
 
 
 @Component({
   selector: 'app-starships',
   standalone: true,
-  imports: [CommonModule, RouterModule, InfiniteScrollModule],
+  imports: [CommonModule, RouterModule, InfiniteScrollModule, RouterOutlet],
   templateUrl: './starships.component.html',
   styleUrl: './starships.component.scss',
 })
@@ -23,7 +23,7 @@ import { StarwarsService } from '../../services/starwars.service';
 // export class StarshipsComponent {}
 
 
-export class StarshipsComponent implements OnInit {
+export default class StarshipsComponent implements OnInit {
 
   public starships: Starship[] = [];
   private page: number = 1;

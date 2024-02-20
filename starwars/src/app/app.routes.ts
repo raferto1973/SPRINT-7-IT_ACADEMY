@@ -1,35 +1,54 @@
 // app.routes.ts
 
-
 import { Routes } from '@angular/router';
 
 
+// Defineix les rutes per l'aplicació
 
-
-// Define the routes for the application
 export const routes: Routes = [
 
-  // {
-  //   path: 'home',
-  //   title: 'Home',
-  //   loadComponent: () => import('../app/pages/home/home.component').then(m => m.HomeComponent),
-  // },
+  {
+    path: 'dashboard',
+    title: 'Dashboard',
+    loadComponent: () => import('./dashboard/dashboard.component'),
+    children: [
 
-  // {
-  //   path: 'starships',
-  //   title: 'Starships',
-  //   loadComponent: () => import('../app/pages/starships/starships.component').then(m => m.StarshipsComponent),
-  // },
+      {
+        path: 'starships',
+        title: 'Starships',
+        loadComponent: () => import('./dashboard/pages/starships/starships.component'),
+      },
 
-  // {
-  //   path: 'pilots',
-  //   title: 'Pilots',
-  //   loadComponent: () => import('../app/pages/pilots/pilots.component').then(m => m.PilotsComponent),
-  // },
+      {
+        path: 'starshi/:id',
+        title: 'Starship',
+        loadComponent: () => import('./dashboard/pages/starship/starship.component'),
+      },
 
-  // {
-  //   path: '',
-  //   redirectTo: 'home',
-  //   pathMatch: 'full',
-  // },
+      {
+        path: 'pilots',
+        title: 'Pilots',
+        loadComponent: () => import('./dashboard/pages/pilots/pilots.component'),
+      },
+
+      {
+        path: 'films',
+        title: 'Films',
+        loadComponent: () => import('./dashboard/pages/films/films.component'),
+      },
+
+      {
+        path:'',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      }
+
+    ]
+  },
+
+  {
+    path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full',
+  },
 ];

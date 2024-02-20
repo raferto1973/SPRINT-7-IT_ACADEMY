@@ -2,17 +2,13 @@
 
 <ul class="nav nav-underline border-top border-bottom justify-content-center">
 
-  <li class="nav-item border-start border-end px-3">
-    <a class="nav-link" href="#">Home</a>
-  </li>
-  <li class="nav-item  px-2">
-    <a class="nav-link" href="#">Starships</a>
-  </li>
-  <li class="nav-item border-start ps-4 px-2">
-    <a class="nav-link" href="#">Pilots</a>
-  </li>
-  <li class="nav-item  border-start border-end px-3">
-    <a class="nav-link" href="#">Films</a>
-  </li>
 
+  @for( item of menuItems; track $index){
+    <li
+      [routerLink] = "item.path"
+      class="nav-item border-start px-4 cursor">
+      <a class="nav-link ">{{ item.title }}</a>
+    </li>
+  }
+  <span class="border-end"></span>
 </ul>

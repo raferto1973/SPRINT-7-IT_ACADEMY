@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-pilots',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet],
   templateUrl: './pilots.component.html',
   styleUrl: './pilots.component.scss'
 })
-export class PilotsComponent {
+export default class PilotsComponent {
 
 }
