@@ -1,10 +1,18 @@
+//user.interface.ts
+
+
+// Interface de l'usuari
 export interface User {
+
   accessToken?: string;
+
   user: {
-    id: number;
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
+    email:      string;
+    id:         number;
+    lastName:   string;
+    password:   string;
+    firstName:  string;
   }
+
 }
+

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet,  } from '@angular/router';
 import DashboardComponent from './dashboard/dashboard.component';
 import StarshipsComponent from './dashboard/pages/starships/starships.component';
 
@@ -10,7 +10,7 @@ import StarshipsComponent from './dashboard/pages/starships/starships.component'
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    imports: [CommonModule, RouterOutlet, StarshipsComponent, DashboardComponent]
+    imports: [CommonModule, RouterOutlet, StarshipsComponent, DashboardComponent, RouterModule ]
 })
 export class AppComponent {
   title = 'starwars';

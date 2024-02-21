@@ -1,1 +1,28 @@
-<p>films works!</p>
+
+// films.component.html
+
+
+<h1>Prueba</h1>
+
+
+<section class="pt-5 mt-5">
+  <div class="container-sm pt-5 mt-5">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      @for (film of filmsArray; track $index) {
+      <div class="col">
+        <div class="card">
+          <img [src]="film.imageUrl" [alt]="film.title + ' film picture'">
+          <div class="card-body">
+            <h5 class="card-title">{{ film.title }}</h5>
+            <p class="card-text">{{ film.episode }}</p>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+
+
+
+

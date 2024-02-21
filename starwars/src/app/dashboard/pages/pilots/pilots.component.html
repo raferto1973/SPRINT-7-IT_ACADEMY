@@ -1,1 +1,24 @@
-<p>pilots works!</p>
+
+
+<h1>Prueba</h1>
+
+
+<section class="pt-5 mt-5">
+  <div class="container-sm pt-5 mt-5">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      @for (pilot of pilotsArray; track $index) {
+      <div class="col">
+        <div class="card">
+          <img [src]="pilot.imageUrl" [alt]="pilot.name + ' pilot picture'">
+          <div class="card-body">
+            <h5 class="card-title">{{ pilot.name }}</h5>
+            <!-- <p class="card-text">{{ film.episode }}</p> -->
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+
+

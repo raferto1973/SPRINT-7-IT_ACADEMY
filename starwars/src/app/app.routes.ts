@@ -1,11 +1,14 @@
+
 // app.routes.ts
 
 import { Routes } from '@angular/router';
 
 
+
 // Defineix les rutes per l'aplicació
 
 export const routes: Routes = [
+
 
   {
     path: 'dashboard',
@@ -20,21 +23,21 @@ export const routes: Routes = [
       },
 
       {
-        path: 'starshi/:id',
+        path: 'starships/:id',
         title: 'Starship',
-        loadComponent: () => import('./dashboard/pages/starship/starship.component'),
+        loadComponent: () => import('./dashboard/pages/starship/starship.component').then(c => c.StarshipComponent),
       },
 
       {
         path: 'pilots',
         title: 'Pilots',
-        loadComponent: () => import('./dashboard/pages/pilots/pilots.component'),
+        loadComponent: () => import('./dashboard/pages/pilots/pilots.component').then(c => c.PilotsComponent),
       },
 
       {
         path: 'films',
         title: 'Films',
-        loadComponent: () => import('./dashboard/pages/films/films.component'),
+        loadComponent: () => import('./dashboard/pages/films/films.component').then(c => c.FilmsComponent),
       },
 
       {
