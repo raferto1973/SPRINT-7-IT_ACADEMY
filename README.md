@@ -40,7 +40,7 @@ npm install
 ## Ejecución ▶️
 Ejecuta la aplicación con el siguiente comando:
 ```bash
-ng start
+npm start
 ```
 
 
