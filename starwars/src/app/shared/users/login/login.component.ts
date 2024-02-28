@@ -1,3 +1,5 @@
+
+
 // login.component.ts
 
 import { Component, OnInit } from '@angular/core';
@@ -32,20 +34,24 @@ export default class LoginComponent implements OnInit {
   ) {
     // redirect to home if already logged in
     if (this.accountService.userValue) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/dashboard']);
     }
   }
 
+  // aquesta funció s'executa quan es carrega el component
   ngOnInit() {
+
     this.loginForm = this.formBuilder.group({
-      email:    ['', Validators.required, EmailValidator],
+      email:    ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+
   }
 
-  // convenience getter for easy access to form fields
+  // Amb aquesta funció es pot accedir fàcilment als camps del formulari.
   get f() { return this.loginForm.controls; }
 
+  // Amb aquesta funció es comprova si el formulari és vàlid i es fa el login.
   onSubmit() {
     this.submitted = true;
     this.alertService.clear();
@@ -57,9 +63,8 @@ export default class LoginComponent implements OnInit {
     this.loading = true;
     this.accountService.login(this.f.email.value, this.f.password.value)
       .subscribe({
-        next: (user) => {
-          this.router.navigateByUrl('/');
-        },
+        next: (_user) => {
+          this.router.navigate(['/dashboard/starships']);        },
         error: error => {
           this.alertService.error(error);
           this.loading = false;

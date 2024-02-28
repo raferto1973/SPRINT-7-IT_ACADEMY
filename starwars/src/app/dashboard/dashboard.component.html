@@ -15,9 +15,10 @@
   <!-- Contingut principal -->
 
 
-  <!-- Benvinguda -->
-
+  <div *ngIf="!isLoggedIn">
+    <!-- Benvinguda -->
     <app-welcome></app-welcome>
+  </div>
 
 
   <!-- Contingut principal d'accès amb login -->
@@ -28,4 +29,7 @@
 
 <!-- Footer -->
 
+<div *ngIf="!isLoggedIn">
   <app-footer></app-footer>
+</div>
+

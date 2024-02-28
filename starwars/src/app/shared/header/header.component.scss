@@ -1,3 +1,5 @@
+
+
 // Estils per al component Header
 
 .login {
@@ -14,3 +16,14 @@
   color: white;
   padding-right: 10px;
 }
+
+/* Cambiar el color de los íconos de redes sociales al hacer hover */
+.bi:hover {
+  color: rgb(235, 249, 79); /* Color amarillo */
+}
+
+/* Cambiar el color del texto de los botones de LOG IN y LOG OUT al hacer hover */
+.btn-link:hover {
+  color: rgb(235, 249, 79) !important; /* Usa !important si es necesario para sobrescribir estilos existentes */
+}
+

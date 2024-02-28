@@ -1,4 +1,8 @@
+
+
 <!-- header.component -->
+
+
 
 <header class="px-5">
   <div class="container-fluid p-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
@@ -20,20 +24,17 @@
 
     </div>
 
-    <div class="logo me-5">
-      <a href="./dashboard">
-        <img src="../../../assets/logo/starwars_logo.png" alt="" height="80"  >
+    <div class="logo me-5 pointer login"style="cursor: pointer;">
+      <a (click)="onLogoClick()">
+        <img src="../../../assets/logo/starwars_logo.png" alt="" height="80">
       </a>
     </div>
-    <div  class="account login">
-       <button class="btn btn-link nav-item nav-link" routerLink="../login" routerLinkActive="routerLinkActive"  >LOG IN</button>
+    <div *ngIf="!isLoggedIn" class="account login">
+      <button class="btn btn-link nav-item nav-link text-light" routerLink="../login">LOG IN</button>
     </div>
-    <!-- <div  class="account  login">
+    <div *ngIf="isLoggedIn" class="account logout text-light">
+      <span class="">{{ firstName }}</span>
       <button class="btn btn-link nav-item nav-link" (click)="logout()">LOG OUT</button>
-    </div> -->
+    </div>
   </div>
 </header>
-
-
-
-

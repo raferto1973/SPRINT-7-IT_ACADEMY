@@ -1,18 +1,20 @@
 // dashboard.component.ts
 
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 import { RouterModule, RouterOutlet } from '@angular/router';
 
+import { AccountService } from '../_services';
+import { Subscription } from 'rxjs';
 
-
+import { HeaderComponent } from '@shared/header/header.component';
 import { NavbarComponent } from '@shared/navbar/navbar.component';
 import { FooterComponent } from '@shared/footer/footer.component';
 
-import StarshipsComponent from './pages/starships/starships.component';
 import { WelcomeComponent } from '@shared/welcome/welcome.component';
-import { HeaderComponent } from '@shared/header/header.component';
-import { CommonModule } from '@angular/common';
 
+import StarshipsComponent from './pages/starships/starships.component';
 
 
 
@@ -26,9 +28,19 @@ import { CommonModule } from '@angular/common';
 
 
 // Component de la pàgina principal de l'aplicació
-export default class DashboardComponent {
-isLoggedIn: any;
+export class HomeComponent implements OnInit, OnDestroy {
+  isLoggedIn: boolean = false;
+  private userSubscription!: Subscription;
 
+  constructor(private accountService: AccountService) {}
 
+  ngOnInit(): void {
+    this.userSubscription = this.accountService.user.subscribe(user => {
+      this.isLoggedIn = !!user;
+    });
+  }
 
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+  }
 }

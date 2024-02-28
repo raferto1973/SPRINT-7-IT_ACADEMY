@@ -1,3 +1,5 @@
+
+
 // alert.component.ts
 
 import { CommonModule } from '@angular/common';
@@ -38,3 +40,4 @@ export class AlertComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 }
+

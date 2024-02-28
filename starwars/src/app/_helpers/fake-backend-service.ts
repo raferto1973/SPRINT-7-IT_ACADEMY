@@ -1,3 +1,5 @@
+
+
 // fake-backend.service.ts
 
 import { Injectable } from '@angular/core';
@@ -30,8 +32,8 @@ export class FakeBackendService {
     return this.getUsers().pipe(
       take(1),
       switchMap((users) => {
-        if (users.find((x: any) => x.username === user.username)) {
-          return throwError('Username "' + user.username + '" is already taken');
+        if (users.find((x: any) => x.email === user.email)) {
+          return throwError('Email "' + user.email + '" is already taken');
         }
 
         // Si el usuario no existe, realizar la inserción
@@ -41,7 +43,7 @@ export class FakeBackendService {
   }
 
 
-  authenticate(username: string, password: string): Observable<any> {
+  authenticate(email: string, password: string): Observable<any> {
     const url = `${this.apiUrl}/users`;
 
     // Verificar las credenciales en db.json
@@ -49,7 +51,7 @@ export class FakeBackendService {
       delay(500),  // Simula el tiempo de espera del servidor
       catchError(() => throwError('Error al obtener usuarios')),
       map((users: any[]) => {
-        const authenticatedUser = users.find(u => u.username === username && u.password === password);
+        const authenticatedUser = users.find(u => u.email === email && u.password === password);
 
         if (!authenticatedUser) {
           throw new Error('Credenciales incorrectas');

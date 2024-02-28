@@ -20,14 +20,14 @@ export const routes: Routes = [
   {
     path: 'register',
     title: 'Register',
-    loadComponent: () => import('./../app/shared/users/register/register.component'),
+    loadComponent: () => import('./../app/shared/users/register/register.component').then(m => m.RegisterComponent)
   },
 
 
   {
     path: 'dashboard',
     title: 'Dashboard',
-    loadComponent: () => import('./dashboard/dashboard.component'),
+    loadComponent: () => import('./dashboard/dashboard.component').then(m => m.HomeComponent),
     children: [
 
       {
