@@ -1,99 +1,90 @@
 
 // films.component.ts
 
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+// Mòduls
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, RouterOutlet } from '@angular/router';
-import { forkJoin, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 
+// Mòdul per fer scroll infinit
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import { StarwarsService } from '@services/starwars.service';
+// Serveis
+import { FilmsService } from '@services/films.service';
+
+// Interfícies
+import { Film } from '@interfaces/film.interface';
+
+// Components
+import { StarshipComponent } from '../starship/starship.component';
 
 
-type Film = {
-  id: string;
-  title: string;
-  episode: string;
-  imageUrl: string;
-}
 
 @Component({
   selector: 'app-films',
   standalone: true,
-  imports: [CommonModule, RouterModule, InfiniteScrollModule, RouterOutlet],
+  imports: [CommonModule, RouterModule, InfiniteScrollModule, RouterOutlet, StarshipComponent ],
   templateUrl: './films.component.html',
-  styleUrls: ['./films.component.scss']
+  styleUrl: './films.component.scss',
 })
 
 
-export class FilmsComponent implements OnChanges {
+export default class FilmComponent implements OnInit {
 
-  // URLs de les pel·lícules rebudes com a propietat d'entrada
-  @Input() filmsURLs: string[] = [];
 
-  // Array per emmagatzemar les dades de les pel·lícules
-  public filmsArray: Film[] = [];
+  public films: Film[]      = [];         // Array de pel·lícules
+  private page: number      = 1;          // Pàgina per obtenir les pel·lícules
+  public loadMore: boolean  = true;       // Indica si es poden carregar més pel·lícules
 
-  // Injeta el servei de Star Wars
-  constructor(private starWarsService: StarwarsService) {}
 
-  // Detecta canvis en les propietats d'entrada i crida getFilms si hi ha canvis en filmsURLs
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['filmsURLs'] && changes['filmsURLs'].currentValue) {
+  // Constructor amb una instància del servei de pel·lícules i del router
+  constructor(private FilmsService: FilmsService, private router: Router) {}
+
+  // Mètode per inicialitzar el component
+  ngOnInit(): void {
+    this.getFilms();
+  }
+
+  // Mètode per obtenir les pel·lícules
+  public getFilms() {
+    this.FilmsService.getFilmsService(this.page)
+        .subscribe({
+          next: (data) => {
+            this.films = this.films.concat(data.results);
+            this.films.forEach(film => {
+              film.episode_id = parseInt(film.url.split('/').reverse()[1]);
+            });
+          },
+          error: (error) => {
+
+            // Si no hi ha més pel·lícules per carregar, desactivem el botó de carregar més
+            if (error.status === 404) this.loadMore = false;
+          }
+        });
+  }
+
+  // Mètode per gestionar errors en la càrrega de les imatges
+  public handleImageError(event: any) {
+    event.target.src = '../../assets/placeholder/placeholder.jpg';
+  }
+
+
+  // Mètode per obtenir la imatge d'un planeta
+  public getFilmImage(film: Film) {
+    return `https://starwars-visualguide.com/assets/img/films/${film.episode_id}.jpg`;
+  }
+
+  // Mètode per carregar més planetes
+  public loadMoreFilms() {
+    if (this.loadMore) {
+      this.page++;
       this.getFilms();
     }
   }
 
-  // Mètode per obtenir les dades de les pel·lícules
-  getFilms() {
-
-    // Crea un array d'observables per obtenir les dades de totes les pel·lícules
-    const filmObservables = this.filmsURLs.map(filmURL => {
-
-      // Extreu l'ID de la pel·lícula de la URL
-      const filmID = filmURL.split("/").filter(segment => segment !== "").pop();
-
-      // En cas d'error, retorna un observable d'un objecte d'error
-      return this.starWarsService.getFilm(filmURL).pipe(
-        catchError(error => of({error: true, message: error.message})),
-
-        // Mapeja la resposta a l'estructura desitjada per a una pel·lícula
-        map(res => ({
-          id: filmID!,
-          imageUrl: '',
-          title: res.title,
-          episode: 'Episode ' + res.episode_id
-        })),
-
-        // Intenta obtenir la imatge per a cada pel·lícula
-        map(film => this.getFilmPicture(filmID!, film))
-      );
-    });
-
-
-    // Utilitza forkJoin per esperar que tots els observables completen i actualitza filmsArray amb els resultats
-    forkJoin(filmObservables).subscribe(films => {
-
-      // Assigna les pel·lícules obtingudes a filmsArray
-      this.filmsArray = films;
-    });
-  }
-
-  getFilmPicture(id: string, film: Film) {
-
-    // Intenta obtenir la imatge de la pel·lícula
-    this.starWarsService.getFilmPicture(id).subscribe(
-
-      // Si és exitós, actualitza l'URL de la imatge de la pel·lícula
-      imageUrl => film.imageUrl = imageUrl,
-
-      // En cas d'error, utilitza una imatge predeterminada
-      error => film.imageUrl = '../../../../assets/images/not-found-starship.jpeg'
-    );
-
-    // Retorna l'objecte de la pel·lícula amb l'URL de la imatge actualitzada o predeterminada
-    return film;
-  }
+  // Mètode per veure el detall d'una nau
+  // public viewFilm(id: string) {
+  //   this.router.navigate(['/films', id]);
+  //   console.log(id);
+  // }
 }

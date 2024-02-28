@@ -2,8 +2,8 @@
 // starship.interface.ts
 
 
+// Interficie per a la informació de les naus de Starwars
 
-// Interface de la nau espacial
 export interface Starship {
 
   id:                     string;

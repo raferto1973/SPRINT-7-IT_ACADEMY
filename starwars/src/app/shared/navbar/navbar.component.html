@@ -1,14 +1,17 @@
 <!-- Navbar component -->
 
-<ul class="nav nav-underline border-top border-bottom justify-content-center">
 
 
-  @for( item of menuItems; track $index){
+<ul class="nav nav-underline border-top border-bottom justify-content-center" >
+  @for( item of menuItems; track $index ){
     <li
-      [routerLink] = "item.path"
-      class="nav-item border-start px-4 cursor">
-      <a class="nav-link ">{{ item.title }}</a>
+        class="nav-item fw-light px-1 text-center cursor">
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          class="nav-link ">{{ item.title }}
+        </a>
     </li>
   }
-  <span class="border-end"></span>
+  <!-- <span class="border-end"></span> -->
 </ul>

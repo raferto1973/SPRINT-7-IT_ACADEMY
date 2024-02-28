@@ -1,23 +1,24 @@
 
 // starships.component.ts
 
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import { Starship } from '@interfaces/starship.interface';
+import { StarshipsService } from '../../../services/starships.service';
 
-import { StarwarsService } from '@services/starwars.service';
+import { Starship } from '../../../interfaces/starship.interface';
+
 
 
 @Component({
-  selector: 'app-starships',
-  standalone: true,
-  imports: [CommonModule, RouterModule, InfiniteScrollModule, RouterOutlet ],
-  templateUrl: './starships.component.html',
-  styleUrl: './starships.component.scss',
+    selector: 'app-starships',
+    standalone: true,
+    templateUrl: './starships.component.html',
+    styleUrls: ['./starships.component.scss'],
+    imports: [CommonModule, RouterModule, InfiniteScrollModule, RouterOutlet, StarshipsComponent, ]
 })
 
 
@@ -28,8 +29,14 @@ export default class StarshipsComponent implements OnInit {
   private page: number          = 1;          // Pàgina per obtenir les naus
   public loadMore: boolean      = true;       // Variable per controlar si es poden carregar més naus
 
+  
+
   // Constructor amb una instància del servei de Starwars i del router
-  constructor(private starwarsService: StarwarsService, private router: Router) {}
+  constructor(
+              private StarshipsService: StarshipsService,
+              private router: Router,
+  ) {}
+
 
   // Mètode per inicialitzar el component
   ngOnInit(): void {
@@ -38,7 +45,7 @@ export default class StarshipsComponent implements OnInit {
 
   // Mètode per obtenir les naus
   public getStarships() {
-    this.starwarsService.getStarships(this.page)
+    this.StarshipsService.getStarshipsService(this.page)
         .subscribe({
           next: (data) => {
             this.starships = this.starships.concat(data.results);
@@ -53,6 +60,12 @@ export default class StarshipsComponent implements OnInit {
         });
   }
 
+  // Mètode per gestionar errors en la càrrega de les imatges
+  public handleImageError(event: any) {
+    event.target.src = '../../assets/placeholder/placeholder.jpg';
+  }
+
+
   // Mètode per carregar més naus
   public loadMoreStarships() {
     if (this.loadMore) {
@@ -63,7 +76,18 @@ export default class StarshipsComponent implements OnInit {
 
   // Mètode per veure el detall d'una nau
   public viewShip(id: string) {
-    this.router.navigate(['/dasboard/starships', id]);
+    this.router.navigate(['/dashboard/starships', id]);
     console.log(id);
   }
+
+
 }
+
+
+
+
+
+
+
+
+

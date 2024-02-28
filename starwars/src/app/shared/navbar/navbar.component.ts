@@ -1,7 +1,11 @@
+
+
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { routes } from '../../app.routes';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-navbar',
@@ -22,7 +26,7 @@ export class NavbarComponent {
 
   constructor() {
 
- 
+
   }
 
 }

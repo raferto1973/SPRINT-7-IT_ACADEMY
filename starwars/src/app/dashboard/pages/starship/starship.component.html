@@ -1,43 +1,114 @@
 
+<!-- Informació de cada Starship -->
 
-<section>
-  <div class="pt-5 text-white">
-    <div class="container col-6 pt-5 py-5 align-items-center">
-      <h2 class="section-title px-4 mb-6 mb-4 text-center text-white">{{starship.model }}</h2>
-      <div class="flex flex-col tablet:flex-row starship-file overflow-hidden">
-        <div class="starship-file-image flex justify-center items-center mt-5 pt-5">
-          <img [src]="starship.imageURL" alt="Starship photo">
+  <!-- Starship -->
+  <section class="mt-2 text-center pt-4">
+    <div class="container mt-5  pt-5 ">
+      <div if="starship" class="mt-5 pt-5">
+        <div class="card mb-3 border-warning border-3 rounded-5" style="max-width: 100%;">
+          <div class="row g-0 text-center align-items-center">
+            <h3 class="text-light pt-2 text-uppercase">Starship</h3>
+            <div class="col-md-5 p-3 ">
+              <img
+              style="width: 25rem;"
+              src="{{starship?.imageURL}}"
+              [alt]="starship?.name + ' picture'"
+              (error)="handleImageError($event)"
+              class="img-fluid rounded-3"
+            >
+            </div>
+            <div class="col-md-7">
+              <div class="card-body text-light text-start">
+                <p class="card-title fw-bold fs-6">Name: &nbsp;        <span class="fw-light ">{{ starship?.name }}                  </span></p>
+                <p class="card-title fw-bold fs-6">Model: &nbsp;       <span class="fw-light ">{{ starship?.model }}                 </span></p>
+                <p class="card-title fw-bold fs-6">Manufacturer: &nbsp;<span class="fw-light ">{{ starship?.manufacturer }}          </span></p>
+                <p class="card-title fw-bold fs-6">Lenght: &nbsp;      <span class="fw-light ">{{ starship?.length }}                </span></p>
+                <p class="card-title fw-bold fs-6">Speed: &nbsp;       <span class="fw-light ">{{ starship?.max_atmosphering_speed }}</span></p>
+                <p class="card-title fw-bold fs-6">Crew: &nbsp;        <span class="fw-light ">{{ starship?.crew }}                  </span></p>
+                <p class="card-title fw-bold fs-6">Cargo: &nbsp;       <span class="fw-light ">{{ starship?.cargo_capacity }}        </span></p>
+                <p class="card-title fw-bold fs-6">Consumables: &nbsp; <span class="fw-light ">{{ starship?.consumables }}           </span></p>
+                <p class="card-title fw-bold fs-6">Class: &nbsp;       <span class="fw-light ">{{ starship?.starship_class }}        </span></p>
+                <p class="card-title fw-bold fs-6">Hyperdrive: &nbsp;  <span class="fw-light ">{{ starship?.hyperdrive_rating }}     </span></p>
+                <p class="card-title fw-bold fs-6">MGLT: &nbsp;        <span class="fw-light ">{{ starship?.MGLT }}                  </span></p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="starship-file-text w-full p-2 py-4 tablet:p-6">
-          <h3 class="font-normal mb-3">{{starship.name }}</h3>
-          <ul class="grid grid-cols-1 laptop:grid-cols-2 gap-2">
-            <li>Model: <span >{{starship.model }}</span></li>
-            <li>Cost in credits: <span >{{ starship.cost_in_credits }}</span></li>
-            <li>Atmosphering Speed: <span >{{ starship.max_atmosphering_speed }}</span></li>
-            <li>Manufacturer: <span >{{ starship.manufacturer }}</span></li>
-            <li>Length: <span >{{ starship.length }}</span></li>
-            <li>Crew: <span >{{ starship.crew }}</span></li>
-          </ul>
-        </div>
+
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
-<!-- @defer (when pilotsLoaded){
-  @if (pilots.length > 0) {
-    <app-pilots [pilotsURLs]="pilots"></app-pilots>
+  <!-- Films -->
+  @defer () {
+    <section class="text-center">
+      <div class="container">
+        <div *ngIf="starship" class="mt-3 pt-4">
+          <div class="card mb-3 border-warning border-3 rounded-5" style="max-width: 100%;">
+            <div class="row g-0 text-center align-items-center">
+              <div class="col-12" *ngIf="films.length > 0">
+                <h3 class="text-light pt-2 text-uppercase">Films</h3>
+                <div class="d-flex flex-wrap justify-content-center g-2">
+                  <div class="p-2" *ngFor="let film of films">
+                    <div class="card-body border border-warning rounded my-3">
+                      <img
+                        class="img-fluid"
+                        style="width: auto; max-height: 250px;"
+                        src="https://starwars-visualguide.com/assets/img/films/{{film.episode_id}}.jpg" [alt]="film.title + ' film picture'"
+                        (error)="handleImageError($event)"
+                      >
+                      <p class="card-title pt-4 fs-6 text-light fw-light">{{ film?.title }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  } @placeholder {
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border text-warning" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
   }
-} @placeholder {
-  <span>Loading pilots...</span>
-}
 
-
-@defer (when filmsLoaded){
-  @if (films.length > 0) {
-    <app-films [filmsURLs]="films"></app-films>
+  <!-- Pilots -->
+  @defer () {
+    <section class="text-center">
+      <div class="container">
+        <div *ngIf="starship" class="mt-3 pt-4">
+          <div class="card mb-3 border-warning border-3 rounded-5" style="max-width: 100%;">
+            <div class="row g-0 text-center align-items-center">
+              <div class="col-12" *ngIf="pilots.length > 0">
+                <h3 class="text-light pt-2 text-uppercase">Pilots</h3>
+                <div class="d-flex flex-wrap justify-content-center g-2">
+                  <div class="p-2" *ngFor="let pilot of pilots">
+                    <div class="card-body border border-warning rounded my-3">
+                      <img
+                        class="img-fluid"
+                        style="width: auto; max-height: 250px;"
+                        src="https://starwars-visualguide.com/assets/img/characters/{{extractId(pilot.url)}}.jpg"
+                        (error)="handleImageError($event)"
+                      >
+                      <p class="card-title pt-4 fs-6 text-light fw-light">{{ pilot?.name }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  } @placeholder {
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border text-warning" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
   }
-} @placeholder {
-  <span>Loading films...</span>
-} -->
+

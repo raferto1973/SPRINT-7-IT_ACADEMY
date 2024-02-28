@@ -4,30 +4,31 @@ import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 
 
-import { HeaderComponent } from '@shared/header/header.component';
+
 import { NavbarComponent } from '@shared/navbar/navbar.component';
 import { FooterComponent } from '@shared/footer/footer.component';
 
 import StarshipsComponent from './pages/starships/starships.component';
-
-import { StarshipComponent } from './pages/starship/starship.component';
-import { PilotsComponent } from './pages/pilots/pilots.component';
-import { FilmsComponent } from './pages/films/films.component';
-
+import { WelcomeComponent } from '@shared/welcome/welcome.component';
+import { HeaderComponent } from '@shared/header/header.component';
+import { CommonModule } from '@angular/common';
 
 
 
 
 @Component({
-    selector: 'app-home',
-    standalone: true,
-    templateUrl: './dashboard.component.html',
-    imports: [RouterModule, NavbarComponent, HeaderComponent, FooterComponent, StarshipsComponent, RouterOutlet, StarshipComponent, PilotsComponent, FilmsComponent ],
+  selector: 'app-home',
+  standalone: true,
+  templateUrl: './dashboard.component.html',
+  imports: [ CommonModule ,RouterModule, RouterOutlet, HeaderComponent, NavbarComponent, FooterComponent, WelcomeComponent, StarshipsComponent, ],
 
 })
 
 
 // Component de la pàgina principal de l'aplicació
 export default class DashboardComponent {
+isLoggedIn: any;
+
+
 
 }

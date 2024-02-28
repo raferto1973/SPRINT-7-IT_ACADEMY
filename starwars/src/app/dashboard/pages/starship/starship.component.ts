@@ -1,21 +1,20 @@
 
 // starship.component.ts
 
-// IMPORTACIONS
 
-import { Component, OnInit } from '@angular/core';
+// Importa les llibreries i mòduls necessaris
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ActivatedRoute, RouterModule, RouterOutlet } from '@angular/router';
 
-import { StarwarsService } from '@services/starwars.service';
+// SERVEIS
+import { StarshipsService } from '@services/starships.service';
+import { Starship } from '@interfaces/starship.interface';
 
-import { Starship } from '../../../interfaces/starship.interface';
-
-import StarshipsComponent from '../starships/starships.component';
-import { PilotsComponent } from '../pilots/pilots.component';
-import { FilmsComponent } from '../films/films.component';
-
-
+// INTERFICIES
+import { Film } from '@interfaces/film.interface';
+import { People } from '@interfaces/people.interface';
 
 
 
@@ -23,76 +22,92 @@ import { FilmsComponent } from '../films/films.component';
 @Component({
   selector: 'app-starship-file',
   standalone: true,
-  imports: [CommonModule, PilotsComponent, FilmsComponent, StarshipsComponent ],
+  imports: [ CommonModule, InfiniteScrollModule, RouterModule, RouterOutlet, StarshipComponent  ],
   templateUrl: './starship.component.html',
 })
 
 
 export class StarshipComponent implements OnInit {
 
-  public pilotsLoaded: boolean = false;
-  public filmsLoaded: boolean = false;
+  private starshipsService = inject(StarshipsService);
 
-  public starshipID: string = '';
+  public starshipId: string | null  = null;
+  public starship?: Starship;
 
-  public starship: Starship = {
-    id: '',
-    name: '',
-    model: '',
-    manufacturer: '',
-    cost_in_credits: '',
-    length: '',
-    max_atmosphering_speed: '',
-    crew: '',
-    passengers: '',
-    cargo_capacity: '',
-    consumables: '',
-    hyperdrive_rating: '',
-    MGLT: '',
-    starship_class: '',
-    pilots: [],
-    films: [],
-    created: '',
-    edited: '',
-    url: '',
-    imageURL: ''
-  };
+  public pilots: People[] = [];
+  public films: Film[]  = [];
 
-  public pilots: string[] = [];
-  public films: string[] = [];
 
-  constructor(private route: ActivatedRoute, private starwarsService: StarwarsService) {}
 
+
+  constructor(private route: ActivatedRoute) {}
+
+  // Mètode per inicialitzar la pàgina
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.starshipID = params.get('id')!;
-    });
-
-    this.getStarship(this.starshipID);
-  }
-
-  public getStarship(id: string) {
-    this.starwarsService.getStarship(id)
-        .subscribe({
-          next: async (data) => {
-            this.starship = data;
-            this.pilots = this.starship.pilots;
-            this.films = this.starship.films;
-            await this.getStarshipPicture(id);
-            this.filmsLoaded = true;
-            this.pilotsLoaded = true;
-          },
-          error: (error) => console.log(error)
-        })
-  }
-
-  async getStarshipPicture(id: string) {
-      try {
-        this.starwarsService.getStarshipPicture(id).subscribe((imageURL: string) => {
-          this.starship.imageURL = imageURL;
-        });
-      } catch (error) {
-        this.starship.imageURL = '../../../assets/images/not-found-starship.jpeg';
+      this.starshipId = params.get('id');
+      if (this.starshipId) {
+        this.loadStarshipData(this.starshipId);
       }
+    });
   }
+
+  //Mèetode per carregar les dades de cada nau
+  loadStarshipData(id: string): void {
+    this.starshipsService.getStarship(id).subscribe({
+      next: (data) => {
+        this.starship = {
+           ...data,
+           imageURL: `https://starwars-visualguide.com/assets/img/starships/${id}.jpg` // Assigna la URL de la imatge
+          }
+          this.loadFilmData(data.films);
+          this.loadPilotsData(data.pilots);
+        },
+        error: (error) => {
+          console.error('Error fetching starship data:', error);
+        }
+      });
+    }
+
+  // Mètode per carregar les dades de les pel·lícules
+  loadFilmData(filmUrls: string[]): void {
+    filmUrls.forEach(url => {
+      this.starshipsService.getFilmByUrl(url).subscribe({
+        next: (filmData) => {
+          this.films.push(filmData);
+        },
+        error: (error) => console.error('Error fetching film data:', error)
+      });
+    });
+  }
+
+  // Mètode per carregar les dades dels pilots
+  loadPilotsData(peopleUrls: string[]): void {
+    this.pilots = []; // Reinicia l'array per assegurar que està buit abans de començar
+    peopleUrls.forEach(url => {
+      this.starshipsService.getPeopleByUrl(url).subscribe({
+        next: (peopleData) => {
+          this.pilots.push(peopleData);
+        },
+        error: (error) => console.error('Error fetching pilot data:', error)
+      });
+    });
+    console.log('Pilots:', this.pilots);
+  }
+
+  // Mètode per extreure l'ID de la URL
+  extractId(url: string): string {
+    const idPattern = /\/([0-9]+)\/$/;
+    const match = url.match(idPattern);
+    return match ? match[1] : 'unknown';
+  }
+
+  // Mètode per gestionar errors en la càrrega de les imatges
+  public handleImageError(event: any) {
+   event.target.src = '../../assets/placeholder/placeholder.jpg';
+  }
+
 }
+
+
+

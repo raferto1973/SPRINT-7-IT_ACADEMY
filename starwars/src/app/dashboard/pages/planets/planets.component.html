@@ -1,0 +1,41 @@
+
+// planets.component.html
+
+
+
+
+<div class="container text-center my-5 py-5">
+  <div class="mt-4 pt-4">
+    <div class="row gap-5 p-5 justify-content-center">
+
+      <!-- Utilitza *ngFor per iterar sobre l'array de films -->
+      <div class="card p-1 m-4 col-3 border-light" style="width: 15rem;" *ngFor="let planet of planets;">
+        <div class="card-body">
+          <img
+            style="width: 5rem;"
+            src="https://starwars-visualguide.com/assets/img/planets/{{planet.id}}.jpg"
+            [alt]="planet.name"
+            (error)="handleImageError($event)"
+          >
+          <h5 class="card-title text-white p-3">{{ planet.name }}</h5>
+          <!-- <p class="card-text fs-6 text-start">Birth year: {{ people.birth_year }}</p>
+          <p class="card-text fs-6 text-start">Hair color: {{ people.hair_color }}</p>
+          <p class="card-text fs-6 text-start">Gender: {{ people.gender }}</p> -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Scroll per carregar més films -->
+<div
+  infiniteScroll [infiniteScrollDistance]="1"
+  [infiniteScrollThrottle]="300"
+  (scrolled)="loadMorePlanets()"
+  >
+</div>
+
+
+

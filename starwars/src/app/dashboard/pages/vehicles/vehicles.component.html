@@ -1,0 +1,37 @@
+
+
+
+<div class="container text-center my-5 py-5">
+  <div class="mt-4 pt-4">
+    <div class="row gap-5 p-5 justify-content-center">
+
+      <!-- Utilitza *ngFor per iterar sobre l'array de species -->
+      <div class="card p-1 m-4 col-3 border-light" style="width: 15rem;" *ngFor="let vehicle of vehicles;">
+        <div class="card-body">
+          <img
+            style="width: 5rem;"
+            src="https://starwars-visualguide.com/assets/img/vehicles/{{vehicle.id}}.jpg"
+            [alt]="vehicle.name + ' film picture'"
+            (error)="handleImageError($event)"
+          >
+          <h5 class="card-title text-white p-3">{{ vehicle.name }}</h5>
+          <!-- <p class="card-text fs-6 text-start">Clasification:  {{ specie.classification }}</p>
+          <p class="card-text fs-6 text-start">Height: {{ specie.average_height }}</p>
+          <p class="card-text fs-6 text-start">Homeworld: {{ specie.homeworld }}</p> -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Scroll per carregar més films -->
+<div
+  infiniteScroll [infiniteScrollDistance]="1"
+  [infiniteScrollThrottle]="300"
+  (scrolled)="loadMoreVehicle()"
+  >
+</div>
+
+

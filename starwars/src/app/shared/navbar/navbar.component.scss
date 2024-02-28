@@ -12,3 +12,8 @@
 .cursor {
   cursor: pointer;
 }
+
+.nav-link.active {
+  color: #e0ec0c !important;                   /* Canvia això pel color de text que vulguis per a l'element actiu */
+  font-weight: lighter;
+}

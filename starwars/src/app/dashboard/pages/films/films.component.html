@@ -2,27 +2,36 @@
 // films.component.html
 
 
-<h1>Prueba</h1>
+<!-- Mostrar les starships -->
 
+<div class="container text-center my-5 py-5">
+  <div class="mt-5 pt-4">
+    <div class="row gap-3 p-3 justify-content-center">
 
-<section class="pt-5 mt-5">
-  <div class="container-sm pt-5 mt-5">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-      @for (film of filmsArray; track $index) {
-      <div class="col">
-        <div class="card">
-          <img [src]="film.imageUrl" [alt]="film.title + ' film picture'">
-          <div class="card-body">
-            <h5 class="card-title">{{ film.title }}</h5>
-            <p class="card-text">{{ film.episode }}</p>
-          </div>
+      <!-- Utilitza *ngFor per iterar sobre l'array de films -->
+      <div class="card p-1 m-2 col-3 border-light" style="width: 20rem;" *ngFor="let film of films">
+        <div class="card-body">
+          <img
+            style="width: 17rem;" src="https://starwars-visualguide.com/assets/img/films/{{film.episode_id}}.jpg"
+            [alt]="film.title + ' film picture'"
+            (error)="handleImageError($event)"> 
+            >
+          <h5 class="card-title text-white mt-3 p-3">{{ film.title }}</h5>
+          <p class="card-text p-3 fs-6">{{ film.opening_crawl }}</p>
         </div>
       </div>
-      }
+
     </div>
   </div>
-</section>
+</div>
 
+<!-- Scroll per carregar més films -->
+<div
+  infiniteScroll [infiniteScrollDistance]="1"
+  [infiniteScrollThrottle]="300"
+  (scrolled)="loadMoreFilms()"
+  >
+</div>
 
 
 

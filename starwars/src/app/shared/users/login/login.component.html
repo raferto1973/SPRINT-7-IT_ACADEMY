@@ -1,0 +1,60 @@
+<!-- login.component.html -->
+
+<div class="container p-5 text-center" style="width: 800px; margin-top: 200px;">
+
+  <div class="col-md-6 offset-md-3 mt-5 pb-5">
+    <div class="card mb-3 bg-black border rounded-5 border-warning py-5 text-center text-warning ">
+      <div class="logo">
+        <a href="./dashboard">
+          <img src="../../../assets/logo/starwars_logo.png" alt="" height="80"  >
+        </a>
+      </div>
+      <h4 class="card-header text-warning text-center my-3">Login</h4>
+      <div class="card-body">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="text" formControlName="username" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+            @if(submitted && f.username.errors){
+            <div class="invalid-feedback">
+              @if(f.username.errors.required){
+              <div>Username is required</div>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="">
+            <label class="form-label">Password</label>
+            <input type="password" formControlName="password" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            @if(submitted && f.password.errors){
+            <div class="invalid-feedback">
+              @if(f.password.errors.required){
+              <div>Password is required</div>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="d-flex gap-2 mt-5 ms-4" >
+            <button [disabled]="loading" class="btn btn-warning btn-lg me-3 rounded-pill" style="--bs-btn-padding-x: 2rem">
+              @if(loading){
+              <span class="spinner-border spinner-border-sm"></span>
+              }
+              Login
+            </button>
+            <a routerLink="../register" class="btn btn-warning btn-lg  rounded-pill"
+              style="--bs-btn-padding-x: 1.5rem">Register</a>
+
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <alert class="mb-5" />
+
+  </div>
+
+</div>
