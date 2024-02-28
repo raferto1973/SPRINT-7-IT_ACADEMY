@@ -3,7 +3,7 @@
 - TypeScript
 - HTML5
 - SCSS (Bootstrap)
-- [Angular CLI](https://github.com/angular/angular-cli) version 17.0.5.
+- [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
 
 ## Requisitos 📋
 
@@ -23,7 +23,7 @@ json-server --watch db.json --port 3000
 
 2. Clona el repositorio:
 ```bash
-git clone https://github.com/raferto1973
+git clone [https://github.com/raferto1973/SPRINT-7-IT_ACADEMY]
 ```
 
 3. Ingresa al directorio del proyecto:
