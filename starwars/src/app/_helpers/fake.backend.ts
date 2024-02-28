@@ -6,8 +6,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize, take, tap, switchMap, catchError } from 'rxjs/operators';
-import { FakeBackendService } from './fake-backend.service';
-
+import { FakeBackendService } from './fake-backend-service';
 
 // array in local storage for registered users
 const usersKey = 'angular-tutorial-users';
@@ -15,6 +14,7 @@ let users: any[] = JSON.parse(localStorage.getItem(usersKey)!) || [];
 
 @Injectable()
 
+// Aquest interceptor simula el backend de l'aplicació.
 export class FakeBackendInterceptor implements HttpInterceptor {
 
   constructor(private prueba: FakeBackendService) { }
@@ -33,8 +33,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }),
         switchMap((backendUsers) => {
           // Verificar si el nombre de usuario ya existe en el backend
-          if (backendUsers.find((x: any) => x.username === user.username)) {
-            return error('Username "' + user.username + '" is already taken');
+          if (backendUsers.find((x: any) => x.email === user.email)) {
+            return error('Email "' + user.email + '" is already taken');
           }
 
           // Si el nombre de usuario no existe en el backend, continuar con el registro
@@ -76,9 +76,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function authenticate() {
 
-      const { username, password } = body;
-      const user = users.find(x => x.username === username && x.password === password);
-      if (!user) return error('Username or password is incorrect');
+      const { email, password } = body;
+      const user = users.find(x => x.email === email && x.password === password);
+      if (!user) return error('Email or password is incorrect');
       return ok({
         ...basicDetails(user),
         token: 'fake-jwt-token'
@@ -101,8 +101,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function basicDetails(user: any) {
-      const { id, username, firstName, lastName } = user;
-      return { id, username, firstName, lastName };
+      const { id, email, firstName, lastName } = user;
+      return { id, email, firstName, lastName };
     }
   }
 }

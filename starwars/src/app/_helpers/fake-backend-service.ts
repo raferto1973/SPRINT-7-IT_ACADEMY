@@ -10,56 +10,44 @@ import { catchError, delay, map, switchMap, take } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
+
+
+
+// Aquest interceptor simula el backend de l'aplicació.
 export class FakeBackendService {
   private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<any> {
-    const url = `${this.apiUrl}/users`;
-    return this.http.get(url).pipe(
-      catchError((error) => {
-        console.error('Error fetching users:', error);
-        return throwError(error);
-      })
+    return this.http.get(`${this.apiUrl}/users`).pipe(
+      catchError(error => throwError('Error fetching users'))
     );
   }
 
   addUser(user: any): Observable<any> {
-    const url = `${this.apiUrl}/users`;
-
-    // Verificar si el usuario ya existe
     return this.getUsers().pipe(
-      take(1),
-      switchMap((users) => {
-        if (users.find((x: any) => x.email === user.email)) {
-          return throwError('Email "' + user.email + '" is already taken');
+      switchMap(users => {
+        if (users.some((x: any) => x.email === user.email)) {
+          return throwError(() => new Error('Email "' + user.email + '" is already taken'));
         }
-
-        // Si el usuario no existe, realizar la inserción
-        return this.http.post(url, user);
+        const newUser = { ...user, id: users.length + 1, token: 'fake-jwt-token' };
+        return this.http.post(`${this.apiUrl}/users`, newUser);
       })
     );
   }
 
 
   authenticate(email: string, password: string): Observable<any> {
-    const url = `${this.apiUrl}/users`;
-
-    // Verificar las credenciales en db.json
     return this.getUsers().pipe(
-      delay(500),  // Simula el tiempo de espera del servidor
-      catchError(() => throwError('Error al obtener usuarios')),
-      map((users: any[]) => {
-        const authenticatedUser = users.find(u => u.email === email && u.password === password);
-
-        if (!authenticatedUser) {
-          throw new Error('Credenciales incorrectas');
+      map(users => {
+        const user = users.find((x: any) => x.email === email && x.password === password);
+        if (!user) {
+          throw new Error('Credencials incorrectes');
         }
-
-        const fakeToken = 'fake-jwt-token';
-        return { token: fakeToken };
-      })
+        return { ...user, token: 'fake-jwt-token' };
+      }),
+      catchError(() => throwError('Error al obtenir usuaris'))
     );
   }
 

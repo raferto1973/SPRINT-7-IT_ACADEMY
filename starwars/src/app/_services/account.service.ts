@@ -4,7 +4,7 @@
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { FakeBackendService } from './../_helpers/fake-backend-service';
@@ -27,18 +27,17 @@ export class AccountService {
     return this.userSubject.value;
   }
 
-  login(username: string, password: string) {
-    return this.fakeBackendService.authenticate(username, password)
+  login(email: string, password: string) {
+    return this.fakeBackendService.authenticate(email, password)
       .pipe(
-        switchMap(response => {
-          const user = { username, token: response.token };  // Ajusta según tus datos de usuario
+        map(user => {
           localStorage.setItem('user', JSON.stringify(user));
           this.userSubject.next(user);
-          return this.fakeBackendService.getUsers();  // Puedes obtener más detalles del usuario si es necesario
-        }),
-        map(users => users.find((user: any) => user.username === username))
+          return user;
+        })
       );
   }
+
 
   logout() {
     localStorage.removeItem('user');
@@ -47,6 +46,15 @@ export class AccountService {
   }
 
   register(user: User) {
-    return this.fakeBackendService.addUser(user);
+    if (user.email && user.password) {
+      return this.fakeBackendService.addUser(user).pipe(
+        switchMap(() => this.login(user.email!, user.password!)) // Add the non-null assertion operator (!) to ensure that the values are not undefined
+      );
+    } else {
+      // Manejar l'error: email o password no proporcionats
+      return throwError(() => new Error('Email i password són requerits.'));
+    }
   }
+
+
 }

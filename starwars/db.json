@@ -29,6 +29,28 @@
       "email": "alex@alex.com",
       "password": "123456",
       "id": "D0u01LZ"
+    },
+    {
+      "id": "e900",
+      "firstName": "marta",
+      "lastName": "marta",
+      "email": "marta@marta.com",
+      "password": "123456"
+    },
+    {
+      "id": "60d0",
+      "firstName": "laia",
+      "lastName": "laia",
+      "email": "laia@laia.com",
+      "password": "123456"
+    },
+    {
+      "id": 7,
+      "firstName": "mila",
+      "lastName": "mila",
+      "email": "mila@mila.com",
+      "password": "123456",
+      "token": "fake-jwt-token"
     }
   ]
 }

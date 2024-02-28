@@ -62,11 +62,21 @@ export class RegisterComponent implements OnInit {
     }
 
     this.loading = true;
+    // Suposem que el mètode register retorna un observable amb les dades de l'usuari registrat
     this.accountService.register(this.registerForm.value)
       .subscribe({
         next: () => {
-          this.alertService.success('Registration successful', true);
-          this.router.navigate(['/login'], { queryParams: { registered: true } });
+          // Aquí fem el login directament després del registre
+          this.accountService.login(this.f.email.value, this.f.password.value)
+            .subscribe({
+              next: () => {
+                this.router.navigate(['/dashboard/starships']);
+              },
+              error: error => {
+                this.alertService.error(error);
+                this.loading = false;
+              }
+            });
         },
         error: error => {
           this.alertService.error(error);
