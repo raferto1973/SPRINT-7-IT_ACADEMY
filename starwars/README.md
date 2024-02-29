@@ -1,9 +1,10 @@
+
 ## Tecnologías Utilizadas 💻
 
 - TypeScript
 - HTML5
 - SCSS (Bootstrap)
-- [Angular CLI](https://github.com/angular/angular-cli) version 17.0.5.
+- [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0
 
 ## Requisitos 📋
 
@@ -41,6 +42,7 @@ npm install
 Ejecuta la aplicación con el siguiente comando:
 ```bash
 ng serve -o
+
 ng test  ( para ejecutar los tests)
 ```
 
