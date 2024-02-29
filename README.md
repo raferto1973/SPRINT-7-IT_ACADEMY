@@ -1,3 +1,4 @@
+![image](https://github.com/raferto1973/SPRINT-7-IT_ACADEMY/assets/148342825/efeaa05c-0d50-4894-bc27-0010e74fa952)
 
 ## Tecnologías Utilizadas 💻
 
