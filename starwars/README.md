@@ -1,4 +1,6 @@
 
+![alt text](image.png)
+
 ## Tecnologías Utilizadas 💻
 
 - TypeScript
