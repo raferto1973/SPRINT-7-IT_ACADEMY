@@ -1,3 +1,4 @@
+![image](https://github.com/raferto1973/SPRINT-7-IT_ACADEMY/assets/148342825/9531c375-aa23-4269-805c-e331178f01a7)
 
 ![alt text](image.png)
 
