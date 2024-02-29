@@ -1,48 +1,53 @@
 
+// species.component.ts
+
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router'; // RouterOutlet no es necesario importarlo aquí
+import { Router, RouterModule } from '@angular/router';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import { Specie } from '@interfaces/specie.interface'; // Asegúrate de que la ruta sea correcta
+import { Specie } from '@interfaces/specie.interface';
 
-import { SpeciesService } from '@services/species.service'; // Asegúrate de que la ruta sea correcta
+import { SpeciesService } from '@services/species.service';
 
 
 @Component({
   selector: 'app-species',
   standalone: true,
-  imports: [CommonModule, RouterModule, InfiniteScrollModule], // Solo importa módulos aquí
+  imports: [CommonModule, RouterModule, InfiniteScrollModule],
   templateUrl: './species.component.html',
-  styleUrls: ['./species.component.scss'] // 'styleUrls' en lugar de 'styleUrl'
+  styleUrls: ['./species.component.scss']
 })
 
 export default class SpeciesComponent implements OnInit {
 
-  // Atributos
-  species: Specie[] = []; // Array de especies
-  page: number = 1; // Página para obtener las especies
-  loadMore: boolean = true; // Indica si se pueden cargar más especies
+  // Aquesta propietat emmagatzema les especies
+  species: Specie[] = [];
+  // Aquesta propietat emmagatzema el número de pàgina per obtenir les especies
+  page: number = 1;
+  // Aquesta propietat indica si es poden carregar més especies
+  loadMore: boolean = true;
 
-  constructor(private speciesService: SpeciesService, private router: Router) {} // Corregido nombre de la variable para seguir convenciones y corregido el tipo
+  // Aquest constructor injecta el servei de les especies i el router
+  constructor(private speciesService: SpeciesService, private router: Router) {}
 
-  // Método para inicializar el componente
+  // Aquest mètode s'executa quan es crea el component
   ngOnInit(): void {
     this.getSpecies();
   }
 
-  // Método para obtener las especies
+  // Aquest mètode obté les especies
   public getSpecies() {
-    this.speciesService.getSpeciesService(this.page) // Asegúrate de que el método se llame `getSpecies` en el servicio
+    this.speciesService.getSpeciesService(this.page)
       .subscribe({
         next: (data: { results: any; }) => {
           this.species = [...this.species, ...data.results];
           this.species.forEach(specie => {
             const segments = specie.url.split('/');
             const id = segments[segments.length - 2];
-            specie.id = id; // Asegúrate de que el modelo `Specie` tenga una propiedad `id`
+            specie.id = id;
           });
         },
         error: (error: { status: number; }) => {
@@ -57,13 +62,13 @@ export default class SpeciesComponent implements OnInit {
     event.target.src = '../../assets/placeholder/placeholder.jpg';
   }
 
-  
-  // Método para generar la URL de la imagen de una especie
+
+  // Mètode per generar la URL de la imatge
   public generateImageUrl(id: string): string {
     return `https://starwars-visualguide.com/#/species/${id}.jpg`; // Asegúrate de que la ruta sea correcta
   }
 
-  // Método para cargar más especies
+  // Mètode per carregar més especies
   public loadMoreSpecies(): void {
     if (this.loadMore) {
       this.page++;

@@ -1,7 +1,7 @@
 
-// planets.component.html
+<!-- planets.component.html -->
 
-
+<!-- Aquesta pàgina mostra els planetes de Star Wars. Utilitza el mètode getPlanets() del servei SWAPIService per obtenir els planetes de Star Wars. Utilitza *ngFor per iterar sobre l'array de planetes i mostrar-los en una targeta. -->
 
 
 <div class="container text-center my-5 py-5">
@@ -18,9 +18,7 @@
             (error)="handleImageError($event)"
           >
           <h5 class="card-title text-white p-3">{{ planet.name }}</h5>
-          <!-- <p class="card-text fs-6 text-start">Birth year: {{ people.birth_year }}</p>
-          <p class="card-text fs-6 text-start">Hair color: {{ people.hair_color }}</p>
-          <p class="card-text fs-6 text-start">Gender: {{ people.gender }}</p> -->
+        
         </div>
       </div>
 

@@ -1,4 +1,10 @@
+
+
 // dashboard.component.ts
+
+
+// Aquest component és la pàgina principal de l'aplicació. Aquest component mostra la barra de navegació, el capçalera i el peu de pàgina. A més, aquest component mostra la pàgina de benvinguda i les naus de Star Wars.
+
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -32,14 +38,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
   private userSubscription!: Subscription;
 
+  // Aquest constructor injecta el servei d'autenticació
   constructor(private accountService: AccountService) {}
 
+  // Aquest mètode s'executa quan es crea el component
   ngOnInit(): void {
     this.userSubscription = this.accountService.user.subscribe(user => {
       this.isLoggedIn = !!user;
     });
   }
 
+  // Aquest mètode s'executa quan es destrueix el component
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
   }

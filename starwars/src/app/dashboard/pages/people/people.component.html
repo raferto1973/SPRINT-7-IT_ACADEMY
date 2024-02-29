@@ -1,5 +1,5 @@
 
-
+// Aquesta pàgina mostra la llista de personatges de Star Wars amb la seva informació bàsica.
 
 <div class="container text-center my-5 py-5">
   <div class="mt-4 pt-4">
@@ -15,9 +15,9 @@
             (error)="handleImageError($event)"
           >
           <h5 class="card-title text-white p-3">{{ people.name }}</h5>
-          <!-- <p class="card-text fs-6 text-start">Birth year: {{ people.birth_year }}</p>
-          <p class="card-text fs-6 text-start">Hair color: {{ people.hair_color }}</p>
-          <p class="card-text fs-6 text-start">Gender: {{ people.gender }}</p> -->
+          <p class="card-text fs-6 text-start">Birth year: {{ people.birth_year }}</p>
+          <p class="card-text fs-6 text-start">Height: {{ people.height }} cms</p>
+          <p class="card-text fs-6 text-start">Gender: {{ people.gender }}</p>
         </div>
       </div>
 

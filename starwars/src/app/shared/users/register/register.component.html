@@ -1,3 +1,7 @@
+
+<!-- register.component.html -->
+
+
 <div class="container p-5 text-center" style="width: 800px; margin-top: 200px;">
   <div class="col-md-6 offset-md-3 mt-5 pb-5">
     <div class="card mb-3 bg-black border rounded-5 border-warning py-5 text-center text-warning ">
@@ -8,6 +12,10 @@
       </div>
       <h4 class="card-header">Register</h4>
       <div class="card-body">
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
           <div class="mb-3">
             <label class="form-label">First Name</label>

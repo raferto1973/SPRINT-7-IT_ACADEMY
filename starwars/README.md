@@ -40,8 +40,17 @@ npm install
 ## Ejecución ▶️
 Ejecuta la aplicación con el siguiente comando:
 ```bash
-ng serve
+ng serve -o
+ng test  ( para ejecutar los tests)
 ```
+
+Acceso demo:
+
+    email:    admin@admin.com
+    password: admin
+
+    email:    demo@demo.com
+    password: demo
 
 
 

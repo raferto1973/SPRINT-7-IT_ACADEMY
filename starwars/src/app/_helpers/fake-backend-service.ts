@@ -2,59 +2,115 @@
 
 // fake-backend.service.ts
 
+// Aquest servei simula un backend real, però en realitat només emmagatzema les dades a la memòria del navegador. Això és útil per a la fase de desenvolupament, ja que no necessites un servidor real per a provar la teva aplicació.
+
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, delay, map, switchMap, take } from 'rxjs/operators';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
+
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 
 
-
-// Aquest interceptor simula el backend de l'aplicació.
 export class FakeBackendService {
   private apiUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getUsers(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/users`).pipe(
-      catchError(error => throwError('Error fetching users'))
+  // Aquest mètode genera un token JWT simulat per a l'usuari proporcionat.
+  private generateFakeToken(user: any): string {
+    const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+    const payload = btoa(
+      JSON.stringify({
+        sub: user.id,
+        name: `${user.firstName} ${user.lastName}`,
+        email: user.email,
+      })
     );
+    const signature = 'simulated_signature';
+    const token = `${header}.${payload}.${signature}`;
+    console.log("Token generat per a l'usuari:", token);
+    return token;
   }
 
-  addUser(user: any): Observable<any> {
-    return this.getUsers().pipe(
-      switchMap(users => {
-        if (users.some((x: any) => x.email === user.email)) {
-          return throwError(() => new Error('Email "' + user.email + '" is already taken'));
-        }
-        const newUser = { ...user, id: users.length + 1, token: 'fake-jwt-token' };
-        return this.http.post(`${this.apiUrl}/users`, newUser);
+  // Aquest mètode retorna tots els usuaris emmagatzemats al backend simulat.
+  getUsers(): Observable<any> {
+    const url = `${this.apiUrl}/users`;
+    return this.http.get(url).pipe(
+      catchError((error) => {
+        console.error('Error fetching users:', error);
+        return throwError(() => new Error('Error fetching users'));
       })
     );
   }
 
+  // Aquest mètode afegeix un nou usuari al backend simulat.
+  addUser(user: any): Observable<any> {
+    const url = `${this.apiUrl}/users`;
 
-  authenticate(email: string, password: string): Observable<any> {
     return this.getUsers().pipe(
-      map(users => {
-        const user = users.find((x: any) => x.email === email && x.password === password);
-        if (!user) {
-          throw new Error('Credencials incorrectes');
+      take(1),
+      switchMap((users) => {
+        if (users.find((x: any) => x.email === user.email)) {
+          console.error(
+            "Intent d'afegir un usuari amb un correu electrònic ja existent:",
+            user.email
+          );
+          // En FakeBackendService, quan llances un error:
+          return throwError(
+            () =>
+              new Error(
+                JSON.stringify({
+                  error: {
+                    message: 'Email "' + user.email + '" is already taken',
+                  },
+                })
+              )
+          );
         }
-        return { ...user, token: 'fake-jwt-token' };
+
+        const newUser = { ...user, token: this.generateFakeToken(user) };
+        console.log('Usuari afegit amb èxit:', newUser);
+        return this.http.post(url, newUser);
       }),
-      catchError(() => throwError('Error al obtenir usuaris'))
+      catchError((error) => {
+        console.error('Error adding user:', error);
+        return throwError(() => new Error('Error adding user'));
+      })
     );
   }
 
+  // Aquest mètode autentica un usuari amb un correu electrònic i una contrasenya.
+  authenticate(email: string, password: string): Observable<any> {
+    const url = `${this.apiUrl}/users`;
+
+    return this.getUsers().pipe(
+      map((users: any[]) => {
+        const authenticatedUser = users.find(
+          (u) => u.email === email && u.password === password
+        );
+
+        if (!authenticatedUser) {
+          console.error("Error d'autenticació per a:", email);
+          throw new Error('Credenciales incorrectas');
+        }
+
+        const token = this.generateFakeToken(authenticatedUser);
+        console.log('Usuari autenticat amb èxit, token:', token);
+        return { ...authenticatedUser, token: token };
+      }),
+      catchError(() => throwError(() => new Error('Error al obtener usuarios')))
+    );
+  }
+
+  // Aquest mètode desconnecta l'usuari.
   logout(): Observable<any> {
-    // Implementa la lógica de cierre de sesión aquí
-    // Retorna un observable vacío ya que no hay una acción real en el backend falso
-    return new Observable(observer => {
+    console.log('Usuari desconnectat');
+    return new Observable((observer) => {
       observer.complete();
     });
   }

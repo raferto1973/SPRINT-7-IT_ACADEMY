@@ -1,0 +1,125 @@
+/* Definició de l'estil de la pàgina de benvinguda */
+
+.cursor {
+  cursor: pointer;
+}
+
+.carrousel-custom {
+  background-color: none;
+}
+
+.carousel-caption {
+  background: rgba(0, 0, 0, 0); /* Elimina el fons canviant l'opacitat a 0 */
+  bottom: auto; /* Ajusta aquest valor segons necessitis */
+  top: 50%; /* Centra verticalment o ajusta segons necessitis */
+  transform: translateY(50%); /* Ajusta la posició vertical */
+}
+
+.custom-btn {
+  position: absolute; /* Posició absoluta respecte al seu contenidor relatiu més proper */
+  top: 50%; /* Centra verticalment dins de la imatge */
+  left: 50%; /* Centra horitzontalment */
+  transform: translate(-50%, -50%); /* Ajusta per a centrar exactament */
+  background-color: transparent; /* Opcional: fa el fons del botó transparent */
+}
+
+h3 {
+  background: rgba(0, 0, 0, 0); /* Elimina el fons canviant l'opacitat a 0 */
+  position: absolute;
+  top: -15%; /* Centra verticalment dins de la imatge */
+  left: 22%; /* Centra horitzontalment */
+  transform: translate(-50%, -50%); /* Ajusta per a centrar exactament */
+  background-color: transparent; /* Posició absoluta respecte al seu contenidor relatiu més proper */
+  text-transform: uppercase; /* Converteix el text a majúscules */
+  width: 300px; /* Ajusta la mida del text segons necessitis */
+}
+
+.custom-btn2 {
+  position: relative; /* Posició absoluta respecte al seu contenidor relatiu més proper */
+  top: 60%; /* Centra verticalment dins de la imatge */
+  left: 15%; /* Centra horitzontalment */
+  transform: translate(-80%, -470%); /* Ajusta per a centrar exactament */
+}
+
+.custom-h2 {
+  background: rgba(0, 0, 0, 0); /* Elimina el fons canviant l'opacitat a 0 */
+  position: relative;
+  top: 60%; /* Centra verticalment dins de la imatge */
+  left: 15%; /* Centra horitzontalment */
+  transform: translate(-35%, -250%); /* Ajusta per a centrar exactament */
+  background-color: transparent; /* Posició absoluta respecte al seu contenidor relatiu més proper */
+  width: 350px;
+}
+
+/* Media queries per a dispositius mòbils */
+
+@media (max-width: 768px) {
+  .container-carousel {
+    padding-top: 50px;
+  }
+
+  .btn-custom-carrusel[_ngcontent-ng-c3321097094] {
+    font-size: 12px;
+    transform: translate(
+      -30%,
+      -180%
+    ); /* Ajusta el padding per mantenir la proporció */
+  }
+
+  .custom .custom-btn,
+  .custom-btn2 {
+    margin-left: 280px;
+    top: 80px;
+    font-size: 14px;
+  }
+  .custom-h2[_ngcontent-ng-c3321097094] {
+    margin-left: 83px;
+    top: -154px;
+    font-size: 8px;
+  }
+  .custom[_ngcontent-ng-c3321097094] .custom-btn[_ngcontent-ng-c3321097094],
+  .custom-btn2[_ngcontent-ng-c3321097094] {
+    margin-left: 80px;
+    top: 80px;
+    font-size: 14px;
+  }
+
+  h3 {
+    transform: translate(-35%, -400%);
+    margin-left: 30px; /* Ajusta la mida de la lletra per a pantalles més petites */
+  }
+}
+
+/* Media queries per a tauletes */
+@media (max-width: 995px) {
+  .container-carousel {
+    padding-top: 50px;
+  }
+
+  h3 {
+    top: -20px;
+    margin-left: -20px;
+    font-size: 14px; /* Ajusta la mida de la lletra per a pantalles més petites */
+  }
+
+  .btn-custom-carrusel {
+    font-size: 12px;
+    transform: translate(
+      -30%,
+      -80%
+    ); /* Ajusta el padding per mantenir la proporció */
+  }
+
+  .custom .custom-btn,
+  .custom-btn2 {
+    margin-left: 30px;
+    top: 80px;
+    font-size: 14px;
+  }
+
+  .custom-h2 {
+    margin-left: 30px;
+    top: -150px;
+    font-size: 12px;
+  }
+}

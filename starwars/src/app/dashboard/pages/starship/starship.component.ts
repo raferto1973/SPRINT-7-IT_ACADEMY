@@ -27,6 +27,7 @@ import { People } from '@interfaces/people.interface';
 })
 
 
+// Classe que defineix el component de la pàgina de les naus
 export class StarshipComponent implements OnInit {
 
   private starshipsService = inject(StarshipsService);
@@ -39,8 +40,9 @@ export class StarshipComponent implements OnInit {
 
 
 
-
+  // Constructor amb els serveis necessaris per obtenir les dades de les naus
   constructor(private route: ActivatedRoute) {}
+
 
   // Mètode per inicialitzar la pàgina
   ngOnInit(): void {

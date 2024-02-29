@@ -1,56 +1,22 @@
 {
   "users": [
     {
-      "id": "1",
-      "email": "admin@admin.com",
-      "password": "123456",
+      "id": "a5e3",
       "firstName": "admin",
       "lastName": "admin",
-      "token": ""
+      "email": "admin@admin.com",
+      "password": "123456",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRtaW4gYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSJ9.simulated_signature"
     },
     {
-      "id": "2",
+      "id": "66de",
+      "firstName": "demo",
+      "lastName": "demo",
       "email": "demo@demo.com",
       "password": "123456",
-      "firstName": "demo",
-      "lastName": "demo"
-    },
-    {
-      "id": "3",
-      "email": "rafa@rafa.com",
-      "password": "123456",
-      "firstName": "rafa",
-      "lastName": "rafa",
-      "token": ""
-    },
-    {
-      "firstName": "alex",
-      "lastName": "alex",
-      "email": "alex@alex.com",
-      "password": "123456",
-      "id": "D0u01LZ"
-    },
-    {
-      "id": "e900",
-      "firstName": "marta",
-      "lastName": "marta",
-      "email": "marta@marta.com",
-      "password": "123456"
-    },
-    {
-      "id": "60d0",
-      "firstName": "laia",
-      "lastName": "laia",
-      "email": "laia@laia.com",
-      "password": "123456"
-    },
-    {
-      "id": 7,
-      "firstName": "mila",
-      "lastName": "mila",
-      "email": "mila@mila.com",
-      "password": "123456",
-      "token": "fake-jwt-token"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGVtbyBkZW1vIiwiZW1haWwiOiJkZW1vQGRlbW8uY29tIn0=.simulated_signature"
     }
+
+
   ]
 }

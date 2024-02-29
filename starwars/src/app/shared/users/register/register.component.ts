@@ -2,10 +2,12 @@
 
 // register.component.ts
 
+// Aquest component és la pàgina de registre de l'aplicació. Aquest component mostra un formulari de registre. Els usuaris poden registrar-se a l'aplicació amb el seu nom, cognom, correu electrònic i contrasenya.
+
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 import { FakeBackendService } from './../../../_helpers/fake-backend-service';
 import { CommonModule } from '@angular/common';
@@ -24,10 +26,12 @@ import { AccountService } from '../../../_services';
   styleUrl: './register.component.scss'
 })
 
+
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   loading = false;
   submitted = false;
+  errorMessage: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,12 +39,14 @@ export class RegisterComponent implements OnInit {
     private accountService: AccountService,
     private alertService: AlertService
   ) {
-    // redirect to home if already logged in
+
+    // redirigeix a la pàgina de dashboard si ja estàs autenticat
     if (this.accountService.userValue) {
       this.router.navigate(['/']);
     }
   }
 
+  // Aquest mètode s'executa quan es carrega el component
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -50,19 +56,23 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  // Convenience getter for easy access to form fields
+  // Amb aquest mètode es pot accedir fàcilment als camps del formulari.
   get f() { return this.registerForm.controls; }
 
+  // Amb aquest mètode es comprova si el formulari és vàlid i es fa el registre.
   onSubmit() {
     this.submitted = true;
     this.alertService.clear();
 
+    // Si el formulari no és vàlid, no es fa res
     if (this.registerForm.invalid) {
       return;
     }
 
+    // es mostra el spinner de carrega
     this.loading = true;
-    // Suposem que el mètode register retorna un observable amb les dades de l'usuari registrat
+
+    // es fa el registre
     this.accountService.register(this.registerForm.value)
       .subscribe({
         next: () => {
@@ -78,10 +88,27 @@ export class RegisterComponent implements OnInit {
               }
             });
         },
-        error: error => {
-          this.alertService.error(error);
+
+        // Si hi ha un error, es mostra un missatge d'error
+        error: (error) => {
+          // Intenta accedir directament a la propietat error.message de la resposta
+          // Suposant que l'error sigui retornat com un objecte Error de JavaScript amb el missatge com a JSON
+          let errorObj;
+          this.errorMessage = error.mapessage;
+          try {
+            errorObj = JSON.parse(error.error);
+          } catch (e) {
+            console.error('Error parsing error message:', e);
+          }
+          this.errorMessage = errorObj?.error?.message || 'No pots registrar un email ja registrat previament.';
           this.loading = false;
         }
+
       });
+  }
+
+  // Mètode públic per obtenir l'estat d'alerta
+  public getAlert() {
+    return this.alertService.onAlert();
   }
 }

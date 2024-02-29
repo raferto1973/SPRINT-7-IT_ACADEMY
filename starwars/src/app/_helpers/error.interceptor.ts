@@ -2,6 +2,8 @@
 
 // error.interceptor.ts
 
+// Aquest interceptor captura totes les respostes HTTP amb un estat d'error i comprova si la resposta és 401 o 403. Si és així, l'usuari es desconnecta automàticament. Si la resposta és un altre tipus d'error, es retorna l'error de resposta com a missatge d'error.
+
 
 
 import { Injectable } from '@angular/core';
