@@ -65,7 +65,7 @@ export default class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    // es mostra el spinner de carrega
+    
     this.loading = true;
     this.accountService.login(this.f.email.value, this.f.password.value)
       .subscribe({
