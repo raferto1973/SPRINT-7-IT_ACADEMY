@@ -17,7 +17,7 @@ export class SpeciesService {
     throw new Error('Method not implemented.');
   }
 
-  private apiUrl = 'https://swapi.dev/api/species/';
+  private apiUrl = 'https://swapi.py4e.com/api/species/';
 
   constructor(private http: HttpClient) { }
 

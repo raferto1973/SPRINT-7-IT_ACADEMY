@@ -22,7 +22,7 @@ import { People } from '@interfaces/people.interface';
 export class StarshipsService {
 
   // URL de la API de Star Wars
-  private apiUrl = 'https://swapi.dev/api/starships/';
+  private apiUrl = 'https://swapi.py4e.com/api/starships/';
 
   // Inicialitza el servei amb el mòdul HttpClient
   constructor(private http: HttpClient) { }

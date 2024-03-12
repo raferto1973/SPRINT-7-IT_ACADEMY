@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 
 export class PeopleService {
 
-  private apiUrl = 'https://swapi.dev/api/people/';
+  private apiUrl = 'https://swapi.py4e.com/api/people/';
 
   constructor(private http: HttpClient) { }
 

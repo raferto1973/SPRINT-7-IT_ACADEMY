@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 
 export class VehiclesService {
 
-  private apiUrl = 'https://swapi.dev/api/vehicles/';
+  private apiUrl = 'https://swapi.py4e.com/api/vehicles/';
 
   constructor(private http: HttpClient) { }
 

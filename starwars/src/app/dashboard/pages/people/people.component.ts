@@ -59,7 +59,7 @@ export default class PeopleComponent implements OnInit {
             if (error.status === 404) this.loadMore = false;
           }
         });
-  }
+  } 
 
   // Mètode per gestionar errors en la càrrega de les imatges
   public handleImageError(event: any) {
