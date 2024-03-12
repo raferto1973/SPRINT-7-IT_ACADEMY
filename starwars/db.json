@@ -15,7 +15,22 @@
       "email": "demo@demo.com",
       "password": "123456",
       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGVtbyBkZW1vIiwiZW1haWwiOiJkZW1vQGRlbW8uY29tIn0=.simulated_signature"
+    },
+    {
+      "firstName": "pep",
+      "lastName": "pep",
+      "email": "pep@pep.com",
+      "password": "123456",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicGVwIHBlcCIsImVtYWlsIjoicGVwQHBlcC5jb20ifQ==.simulated_signature",
+      "id": "WnnwrK7"
+    },
+    {
+      "firstName": "ismael",
+      "lastName": "ismael",
+      "email": "ismael@ismael.com",
+      "password": "ismael",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiaXNtYWVsIGlzbWFlbCIsImVtYWlsIjoiaXNtYWVsQGlzbWFlbC5jb20ifQ==.simulated_signature",
+      "id": "g1WNP2N"
     }
-
   ]
 }
